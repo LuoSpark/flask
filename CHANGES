@@ -60,7 +60,7 @@ Version 1.0
 - JSON responses are now terminated with a newline character, because it is a
   convention that UNIX text files end with a newline and some clients don't
   deal well when this newline is missing. See
-  https://github.com/mitsuhiko/flask/pull/1262 -- this came up originally as a
+  https://github.com/pallets/flask/pull/1262 -- this came up originally as a
   part of https://github.com/kennethreitz/httpbin/issues/168
 - The automatically provided ``OPTIONS`` method is now correctly disabled if
   the user registered an overriding rule with the lowercase-version
@@ -73,6 +73,9 @@ Version 1.0
 - ``flask.g`` now has ``pop()`` and ``setdefault`` methods.
 - Turn on autoescape for ``flask.templating.render_template_string`` by default
   (pull request ``#1515``).
+- ``flask.ext`` is now deprecated (pull request ``#1484``).
+- ``send_from_directory`` now raises BadRequest if the filename is invalid on
+  the server OS (pull request ``#1763``).
 
 Version 0.10.2
 --------------

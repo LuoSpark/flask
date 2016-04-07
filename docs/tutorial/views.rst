@@ -12,11 +12,11 @@ Show Entries
 This view shows all the entries stored in the database.  It listens on the
 root of the application and will select title and text from the database.
 The one with the highest id (the newest entry) will be on top.  The rows
-returned from the cursor look a bit like tuples because we are using
+returned from the cursor look a bit like dictionaries because we are using
 the :class:`sqlite3.Row` row factory.
 
-The view function will pass the entries as dictionaries to the
-:file:`show_entries.html` template and return the rendered one::
+The view function will pass the entries to the :file:`show_entries.html`
+template and return the rendered one::
 
     @app.route('/')
     def show_entries():
@@ -94,5 +94,11 @@ if the user was logged in.
         session.pop('logged_in', None)
         flash('You were logged out')
         return redirect(url_for('show_entries'))
+        
+Note that it is not a good idea to store passwords in plain text. You want to
+protect login credentials if someone happens to have access to your database.
+One way to do this is to use Security Helpers from Werkzeug to hash the
+password. However, the emphasis of this tutorial is to demonstrate the basics
+of Flask and plain text passwords are used for simplicity.
 
 Continue with :ref:`tutorial-templates`.

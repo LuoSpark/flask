@@ -204,6 +204,8 @@ The following converters exist:
 `int`       accepts integers
 `float`     like `int` but for floating point values
 `path`      like the default but also accepts slashes
+`any`       matches one of the items provided
+`uuid`      accepts UUID strings
 =========== ===============================================
 
 .. admonition:: Unique URLs / Redirection Behavior
@@ -319,7 +321,7 @@ You have no idea what an HTTP method is?  Worry not, here is a quick
 introduction to HTTP methods and why they matter:
 
 The HTTP method (also often called "the verb") tells the server what the
-clients wants to *do* with the requested page.  The following methods are
+client wants to *do* with the requested page.  The following methods are
 very common:
 
 ``GET``
