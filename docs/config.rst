@@ -183,6 +183,7 @@ The following configuration values are used internally by Flask:
                                   if they are not requested by an
                                   XMLHttpRequest object (controlled by
                                   the ``X-Requested-With`` header)
+``JSONIFY_MIMETYPE``              MIME type used for jsonify responses.
 ``TEMPLATES_AUTO_RELOAD``         Whether to check for modifications of
                                   the template source and reload it
                                   automatically. By default the value is
@@ -240,7 +241,7 @@ The following configuration values are used internally by Flask:
 .. versionadded:: 0.10
    ``JSON_AS_ASCII``, ``JSON_SORT_KEYS``, ``JSONIFY_PRETTYPRINT_REGULAR``
 
-.. versionadded:: 1.0
+.. versionadded:: 0.11
    ``SESSION_REFRESH_EACH_REQUEST``, ``TEMPLATES_AUTO_RELOAD``,
    ``LOGGER_HANDLER_POLICY``, ``EXPLAIN_TEMPLATE_LOADING``
 
@@ -309,6 +310,7 @@ that experience:
     limit yourself to request-only accesses to the configuration you can
     reconfigure the object later on as needed.
 
+.. _config-dev-prod:
 
 Development / Production
 ------------------------

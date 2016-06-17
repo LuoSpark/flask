@@ -22,7 +22,8 @@ from werkzeug.exceptions import HTTPException, InternalServerError, \
      MethodNotAllowed, BadRequest, default_exceptions
 
 from .helpers import _PackageBoundObject, url_for, get_flashed_messages, \
-     locked_cached_property, _endpoint_from_view_func, find_package
+     locked_cached_property, _endpoint_from_view_func, find_package, \
+     get_debug_flag
 from . import json, cli
 from .wrappers import Request, Response
 from .config import ConfigAttribute, Config
@@ -120,7 +121,7 @@ class Flask(_PackageBoundObject):
        The `instance_path` and `instance_relative_config` parameters were
        added.
 
-    .. versionadded:: 1.0
+    .. versionadded:: 0.11
        The `root_path` parameter was added.
 
     :param import_name: the name of the application package
@@ -159,7 +160,7 @@ class Flask(_PackageBoundObject):
 
     #: The class that is used for the Jinja environment.
     #:
-    #: .. versionadded:: 1.0
+    #: .. versionadded:: 0.11
     jinja_environment = Environment
 
     #: The class that is used for the :data:`~flask.g` instance.
@@ -198,7 +199,7 @@ class Flask(_PackageBoundObject):
     #: 1. Default values for certain config options.
     #: 2. Access to config values through attributes in addition to keys.
     #:
-    #: .. versionadded:: 1.0
+    #: .. versionadded:: 0.11
     config_class = Config
 
     #: The debug flag.  Set this to ``True`` to enable debugging of the
@@ -289,7 +290,7 @@ class Flask(_PackageBoundObject):
 
     #: Default configuration parameters.
     default_config = ImmutableDict({
-        'DEBUG':                                False,
+        'DEBUG':                                get_debug_flag(default=False),
         'TESTING':                              False,
         'PROPAGATE_EXCEPTIONS':                 None,
         'PRESERVE_CONTEXT_ON_EXCEPTION':        None,
@@ -315,6 +316,7 @@ class Flask(_PackageBoundObject):
         'JSON_AS_ASCII':                        True,
         'JSON_SORT_KEYS':                       True,
         'JSONIFY_PRETTYPRINT_REGULAR':          True,
+        'JSONIFY_MIMETYPE':                     'application/json',
         'TEMPLATES_AUTO_RELOAD':                None,
     })
 
@@ -480,7 +482,7 @@ class Flask(_PackageBoundObject):
         #: A list of shell context processor functions that should be run
         #: when a shell context is created.
         #:
-        #: .. versionadded:: 1.0
+        #: .. versionadded:: 0.11
         self.shell_context_processors = []
 
         #: all the attached blueprints in a dictionary by name.  Blueprints
@@ -545,7 +547,7 @@ class Flask(_PackageBoundObject):
         #: provided by Flask itself and can be overridden.
         #:
         #: This is an instance of a :class:`click.Group` object.
-        self.cli = cli.AppGroup(self)
+        self.cli = cli.AppGroup(self.name)
 
     def _get_error_handlers(self):
         from warnings import warn
@@ -682,7 +684,7 @@ class Flask(_PackageBoundObject):
         this function to customize the behavior.
 
         .. versionadded:: 0.5
-        .. versionchanged:: 1.0
+        .. versionchanged:: 0.11
            ``Environment.auto_reload`` set in accordance with
            ``TEMPLATES_AUTO_RELOAD`` configuration option.
         """
@@ -771,7 +773,7 @@ class Flask(_PackageBoundObject):
         application.  This runs all the registered shell context
         processors.
 
-        .. versionadded:: 1.0
+        .. versionadded:: 0.11
         """
         rv = {'app': self, 'g': g}
         for processor in self.shell_context_processors:
@@ -892,7 +894,7 @@ class Flask(_PackageBoundObject):
            to override the client to be used by setting the
            :attr:`test_client_class` attribute.
 
-        .. versionchanged:: 1.0
+        .. versionchanged:: 0.11
            Added `**kwargs` to support passing additional keyword arguments to
            the constructor of :attr:`test_client_class`.
         """
@@ -953,7 +955,7 @@ class Flask(_PackageBoundObject):
     def iter_blueprints(self):
         """Iterates over all blueprints by the order they were registered.
 
-        .. versionadded:: 1.0
+        .. versionadded:: 0.11
         """
         return iter(self._blueprint_order)
 
@@ -1402,7 +1404,7 @@ class Flask(_PackageBoundObject):
     def shell_context_processor(self, f):
         """Registers a shell context processor function.
 
-        .. versionadded:: 1.0
+        .. versionadded:: 0.11
         """
         self.shell_context_processors.append(f)
         return f
